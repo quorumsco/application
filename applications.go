@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/iogo-framework/database"
+	"github.com/iogo-framework/databases"
 	"github.com/iogo-framework/logs"
 	"github.com/iogo-framework/router"
 	"github.com/iogo-framework/settings"
@@ -25,7 +25,7 @@ type Mux interface {
 
 type Application struct {
 	Mux       Mux
-	DB        *database.DB
+	DB        *databases.DB
 	Templates map[string]*template.Template
 	Urls      map[string]string
 }
@@ -34,7 +34,7 @@ func New() (*Application, error) {
 	var app = new(Application)
 
 	app.Urls = make(map[string]string)
-	app.DB = new(database.DB)
+	app.DB = new(databases.DB)
 	app.Mux = router.New()
 
 	funcMap := template.FuncMap{
@@ -44,10 +44,10 @@ func New() (*Application, error) {
 	}
 
 	var err error
-	if app.DB.SQLX, err = database.InitSQLX(); err != nil {
+	if app.DB.SQLX, err = databases.InitSQLX(); err != nil {
 		return nil, err
 	}
-	//if application.DB.GORM, err = database.InitGORM(); err != nil {
+	//if application.DB.GORM, err = databases.InitGORM(); err != nil {
 	//return err
 	//}
 	app.Templates = views.Templates(&funcMap)
