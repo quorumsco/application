@@ -5,10 +5,9 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/silverwyrda/iogo"
-
 	"github.com/iogo-framework/database"
 	"github.com/iogo-framework/logs"
+	"github.com/iogo-framework/router"
 	"github.com/iogo-framework/settings"
 	"github.com/iogo-framework/views"
 )
@@ -36,7 +35,7 @@ func New() (*Application, error) {
 
 	app.Urls = make(map[string]string)
 	app.DB = new(database.DB)
-	app.Mux = iogo.New()
+	app.Mux = router.New()
 
 	funcMap := template.FuncMap{
 		"path": func(name string, params ...interface{}) string {
