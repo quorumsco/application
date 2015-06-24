@@ -74,6 +74,7 @@ func (app *Application) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 // Serve start a listening server on port.
 func (app *Application) Serve(host string, port int) {
-	logs.Info("Listening on http://%s:%d", host, port)
-	logs.Critical(http.ListenAndServe(fmt.Sprintf(":%d", port), app.Mux))
+	addr := fmt.Sprintf("%s:%d", host, port)
+	logs.Info("Listening on http://%s", addr)
+	logs.Critical(http.ListenAndServe(addr, app.Mux))
 }
