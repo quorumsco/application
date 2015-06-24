@@ -3,7 +3,6 @@ package application
 import (
 	"net/http"
 
-	"github.com/iogo-framework/application"
 	"github.com/iogo-framework/router"
 )
 
@@ -20,5 +19,5 @@ func (app *Application) Apply(h http.Handler) http.Handler {
 
 // App retrieves the Application stored by the middleware Apply.
 func App(r *http.Request) *Application {
-	return router.GetContext(r).Env["Application"].(*application.Application)
+	return router.GetContext(r).Env["Application"].(*Application)
 }
