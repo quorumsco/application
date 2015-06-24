@@ -5,7 +5,6 @@ applications components.
 package application
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/iogo-framework/logs"
@@ -73,8 +72,7 @@ func (app *Application) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 // Serve start a listening server on port.
-func (app *Application) Serve(host string, port int) {
-	addr := fmt.Sprintf("%s:%d", host, port)
-	logs.Info("Listening on http://%s", addr)
-	logs.Critical(http.ListenAndServe(addr, app.Mux))
+func (app *Application) Serve(hostPort string) {
+	logs.Info("Listening on http://%s", hostPort)
+	logs.Critical(http.ListenAndServe(hostPort, app.Mux))
 }
