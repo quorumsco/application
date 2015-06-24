@@ -2,6 +2,8 @@ package application
 
 import "net/http"
 
+// Mux is the interface requests multiplexers must implement to be used
+// with Application.
 type Mux interface {
 	Get(path string, handle http.HandlerFunc)
 	Post(path string, handle http.HandlerFunc)
