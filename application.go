@@ -13,66 +13,65 @@ import (
 // Application is an abstraction layer containing the router of your
 // choice and additionnal components (templates, database links, etc).
 type Application struct {
-	Mux        Mux
 	Components map[string]interface{}
 }
 
 // New creates a new Application with initialised fields.
-func New() (*Application, error) {
+func New() *Application {
 	var app = new(Application)
 	app.Components = make(map[string]interface{})
-	return app, nil
+	return app
 }
 
 // Get defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Get(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Get(path, handle)
+	app.Components["Mux"].(Mux).Get(path, handle)
 }
 
 // Post defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Post(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Post(path, handle)
+	app.Components["Mux"].(Mux).Post(path, handle)
 }
 
 // Put defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Put(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Put(path, handle)
+	app.Components["Mux"].(Mux).Put(path, handle)
 }
 
 // Patch defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Patch(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Patch(path, handle)
+	app.Components["Mux"].(Mux).Patch(path, handle)
 }
 
 // Delete defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Delete(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Delete(path, handle)
+	app.Components["Mux"].(Mux).Delete(path, handle)
 }
 
 // Options defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Options(path interface{}, handle http.HandlerFunc) {
-	app.Mux.Options(path, handle)
+	app.Components["Mux"].(Mux).Options(path, handle)
 }
 
 // Use defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Use(handler func(http.Handler) http.Handler) {
-	app.Mux.Use(handler)
+	app.Components["Mux"].(Mux).Use(handler)
 }
 
 // ServeHTTP allows Mux to start processing HTTP requests. Satisfies net/http.Handler.
 func (app *Application) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	app.Mux.ServeHTTP(w, req)
+	app.Components["Mux"].(Mux).ServeHTTP(w, req)
 }
 
 // Serve start a listening server on port.
-func (app *Application) Serve(hostPort string) {
-	logs.Info("Listening on http://%s", hostPort)
-	logs.Critical(http.ListenAndServe(hostPort, app.Mux))
+func (app *Application) Serve(listen string) {
+	logs.Info("Listening on http://%s", listen)
+	logs.Critical(http.ListenAndServe(listen, app.Components["Mux"].(Mux)))
 }

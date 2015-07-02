@@ -11,7 +11,7 @@ import (
 // iogo-framework/router.
 func (app *Application) Apply(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		router.GetContext(r).Env["Application"] = app
+		router.Context(r).Env["Application"] = app
 		h.ServeHTTP(w, r)
 	}
 	return http.HandlerFunc(fn)
@@ -19,5 +19,5 @@ func (app *Application) Apply(h http.Handler) http.Handler {
 
 // App retrieves the Application stored by the middleware Apply.
 func App(r *http.Request) *Application {
-	return router.GetContext(r).Env["Application"].(*Application)
+	return router.Context(r).Env["Application"].(*Application)
 }
