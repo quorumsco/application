@@ -71,7 +71,7 @@ func (app *Application) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 // Serve start a listening server on port.
-func (app *Application) Serve(listen string) {
+func (app *Application) Serve(listen string) error {
 	logs.Info("Listening on http://%s", listen)
-	logs.Critical(http.ListenAndServe(listen, app.Components["Mux"].(Mux)))
+	return http.ListenAndServe(listen, app.Components["Mux"].(Mux))
 }
