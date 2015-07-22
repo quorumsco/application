@@ -3,7 +3,7 @@ package application
 import (
 	"net/http"
 
-	"github.com/iogo-framework/router"
+	"github.com/quorumsco/router"
 )
 
 // Apply is a middleware which make the app context available to the

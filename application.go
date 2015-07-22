@@ -7,7 +7,7 @@ package application
 import (
 	"net/http"
 
-	"github.com/iogo-framework/logs"
+	"github.com/quorumsco/logs"
 )
 
 // Application is an abstraction layer containing the router of your
