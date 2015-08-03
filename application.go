@@ -7,6 +7,7 @@ package application
 import (
 	"net/http"
 
+	"github.com/quorumsco/gojimux"
 	"github.com/quorumsco/logs"
 )
 
@@ -26,52 +27,53 @@ func New() *Application {
 // Get defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Get(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Get(path, handle)
+	gojimux.Get(path, handle, app.Components["Mux"])
 }
 
 // Post defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Post(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Post(path, handle)
+	gojimux.Post(path, handle, app.Components["Mux"])
 }
 
 // Put defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Put(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Put(path, handle)
+	gojimux.Put(path, handle, app.Components["Mux"])
 }
 
 // Patch defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Patch(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Patch(path, handle)
+	gojimux.Patch(path, handle, app.Components["Mux"])
 }
 
 // Delete defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Delete(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Delete(path, handle)
+	gojimux.Delete(path, handle, app.Components["Mux"])
 }
 
 // Options defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Options(path interface{}, handle http.HandlerFunc) {
-	app.Components["Mux"].(Mux).Options(path, handle)
+	gojimux.Options(path, handle, app.Components["Mux"])
 }
 
 // Use defers to the router Mux the handling of requests matching the
 // pattern path, associated with the handle function.
 func (app *Application) Use(handler func(http.Handler) http.Handler) {
-	app.Components["Mux"].(Mux).Use(handler)
+	gojimux.Use(handler, app.Components["Mux"])
 }
 
 // ServeHTTP allows Mux to start processing HTTP requests. Satisfies net/http.Handler.
 func (app *Application) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	app.Components["Mux"].(Mux).ServeHTTP(w, req)
+	gojimux.ServeHTTP(w, req, app.Components["Mux"])
 }
 
 // Serve start a listening server on port.
 func (app *Application) Serve(listen string) error {
 	logs.Info("listening on http://%s", listen)
-	return http.ListenAndServe(listen, app.Components["Mux"].(Mux))
+	return ListenAndServe(listen, app.Components["Mux"])
+	// return gojimux.ListenAndServe(listen, app.Components["Mux"])
 }

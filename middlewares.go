@@ -11,6 +11,7 @@ import (
 // iogo-framework/router.
 func (app *Application) Apply(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
+
 		router.Context(r).Env["Application"] = app
 		h.ServeHTTP(w, r)
 	}
