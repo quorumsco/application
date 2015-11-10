@@ -1,3 +1,7 @@
+/*
+Package application provides a convenient wrapper for common web
+applications components.
+*/
 package application
 
 import (
