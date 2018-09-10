@@ -11,6 +11,7 @@ import "net/http"
 type Mux interface {
 	Get(path interface{}, handle http.HandlerFunc)
 	Post(path interface{}, handle http.HandlerFunc)
+	//Post(path interface{}, handle http.HandlerFunc, env string)
 	Put(path interface{}, handle http.HandlerFunc)
 	Patch(path interface{}, handle http.HandlerFunc)
 	Delete(path interface{}, handle http.HandlerFunc)
